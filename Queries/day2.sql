@@ -253,7 +253,8 @@ GROUP BY REGION_ID;
 --ALREADY COMBINED RESULT FURThER MORE
 --you can only use hacing
 --if youare using aggregate functions in condition after group by
---for example if count of employees
+--for example if count of employees in each department more than 10
+--HAVING COUNT(*) >10 WORKS, WHERE COUNT(*)WILL NEVER WORK
 
 
 ---DISPLAY COUNT OF EMPLOYEES IN EACH DEPARTMENT
