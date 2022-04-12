@@ -295,14 +295,6 @@ HAVING AVG(SALARY) BETWEEN 5000 AND 10000;
 
 /*Departments Table
 
-
-
-   3.10 Display the Count of Departments in EACH LOCATION_ID
-
-   3.11 Display the Count of Departments that has manager
-
-   3.12 Display the Count of Departments that contains IT in DEPARTMENT_NAME
-
  */
  --3.9 Display the Count of Departments in LOCATION_ID 1700
  SELECT LOCATION_ID,COUNT(*)
@@ -310,44 +302,119 @@ FROM DEPARTMENTS
 WHERE LOCATION_ID = 1700
 GROUP BY LOCATION_ID;
 
+--  3.10 Display the Count of Departments in EACH LOCATION_ID
+SELECT COUNT(*) ,LOCATION_ID
+FROM DEPARTMENTS
+group by LOCATION_ID;
+
+--3.11 Display the Count of Departments that has manager id
+select count(*)
+from DEPARTMENTS
+where MANAGER_ID is not null;
+
+--3.12 Display the Count of Departments that contains IT in DEPARTMENT_NAME
+SELECT DEPARTMENT_NAME,COUNT(*)
+FROM DEPARTMENTS
+WHERE DEPARTMENT_NAME LIKE'%IT%'
+GROUP BY DEPARTMENT_NAME;
 
 /*
  Locations Table
 
-   3.13 Display the count of Location that does not have STATE_PROVINCE
 
-   3.14 Display the count of Location in US, CA, IN
+ */
 
-   3.15 Display the count of Location in EACH COUNTRY (COUNTRY_ID)
+ -- 3.13 Display the count of Location that does not have STATE_PROVINCE
+ SELECT COUNT(*)
+FROM LOCATIONS
+WHERE STATE_PROVINCE IS NULL;
 
-   3.16 Display the count of Location for those location Contains st, Street in STREET_ADDRESS
+--3.14 Display the count of Location in US, CA, IN
+SELECT COUNT(COUNTRY_ID)
+FROM LOCATIONS
+WHERE COUNTRY_ID IN ('US','IN','CA');
 
-   3.15 Display the count of Location in EACH COUNTRY (COUNTRY_ID)
-         if the count is less than 3
+-- 3.15 Display the count of Location in EACH COUNTRY (COUNTRY_ID)
+SELECT COUNT(*),COUNTRY_ID
+FROM LOCATIONS
+GROUP BY COUNTRY_ID;
+
+--  3.16 Display the count of Location for those location Contains st, Street in STREET_ADDRESS
+SELECT COUNT(*), STREET_ADDRESS
+FROM LOCATIONS
+WHERE STREET_ADDRESS LIKE '%st%' OR STREET_ADDRESS LIKE '%Street'
+GROUP BY STREET_ADDRESS;
+
+--3.15 Display the count of Location in EACH COUNTRY (COUNTRY_ID)
+--if the count is less than 3
+
+SELECT COUNT(*),COUNTRY_ID
+FROM LOCATIONS
+GROUP BY COUNTRY_ID
+HAVING COUNT(*) <3;
+
+
+
+/*
 
 Countries Table
 
-   3.16 Display the count of Countries
+*/
 
-   3.17 Display the count of Countries in Region 3
+--3.16 Display the count of Countries
+SELECT COUNT(*)
+FROM COUNTRIES;
 
-   3.18 Display the count of Countries that has COUNTRY_NAME ended with a
+-- 3.17 Display the count of Countries in Region 3
+SELECT COUNT(*), REGION_ID
+FROM COUNTRIES
+WHERE REGION_ID =3
+GROUP BY REGION_ID;
 
-   3.19 Display the count if Countries for each REGION (REGION_ID)
+--  3.18 Display the count of Countries that has COUNTRY_NAME ended with a
+SELECT COUNT(*), COUNTRY_NAME
+FROM COUNTRIES
+WHERE COUNTRY_NAME LIKE'%a'
+GROUP BY COUNTRY_NAME;
 
-   3.19 Display the count if Countries for each REGION (REGION_ID)
-        if the count is more than 5
+--3.19 Display the count if Countries for each REGION (REGION_ID)
+SELECT COUNT(*), REGION_ID
+FROM COUNTRIES
+GROUP BY REGION_ID;
 
+  --3.19 Display the count if Countries for each REGION (REGION_ID)
+    --   if the count is more than 5
+SELECT COUNT(*), REGION_ID
+FROM COUNTRIES
+GROUP BY REGION_ID
+HAVING COUNT(*) >5;
 
- Jobs Table
-
-    3.2O Find out MAX(MIN_SALARY) in all JOBS
-
-    3.21 Find out MAX (MAX_SALARY) for JOBS excluding President
-
-    3.22 Display AVG(MAX_SALARY) (this is column name) for JOBS that has Manager in TITLE
-
-* /
-
+/*
+Jobs Table
 
  */
+
+
+
+--3.2O Find out MAX(MIN_SALARY) in all JOBS
+
+SELECT  JOB_TITLE, MAX(MIN_SALARY)
+FROM JOBS
+group by JOB_TITLE;
+   --3.21 Find out MAX (MAX_SALARY) for JOBS excluding President
+SELECT  JOB_TITLE,
+        MAX(MAX_SALARY)
+FROM JOBS
+GROUP BY JOB_TITLE
+HAVING JOB_TITLE !='President';
+
+--3.22 Display AVG(MAX_SALARY) (this is column name) for JOBS that has Manager in TITLE
+
+SELECT AVG(MAX_SALARY), JOB_TITLE
+FROM JOBS
+WHERE JOB_TITLE LIKE '%Manager%'
+GROUP BY JOB_TITLE;
+
+
+
+
