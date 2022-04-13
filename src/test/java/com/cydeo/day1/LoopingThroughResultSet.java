@@ -19,14 +19,17 @@ public class LoopingThroughResultSet {
             //KEEP LOOPING TO NEXT ROW UNTIL THERE IS NO MORE ROW WHEN rs.next() return false
             //rs.next()move the pointer to next row
             //and return ture if there is valid next row and false if there is no valid next row
+            // this will print all 4 rows REGION_NAME
             while(rs.next()){
 
-                System.out.println("rs.getString(\"region_name\") = " + rs.getString("region_name"));
+                System.out.println("rs.getString(\"REGIONS_NAME\") = " + rs.getString("REGION_NAME"));
             }
 
             // where is your pointer right now ?? --?? AfterLast location
             // below ling will throw exception because we are at afterlast location
             //System.out.println("rs.getString(\"region_name\") = " + rs.getString("region_name"));
+
+
 
         }catch (SQLException e){
             System.out.println("Exception occurred " + e.getMessage());
